@@ -46,8 +46,10 @@ function loginUser(event) {
   const password = document.getElementById("login-password").value;
 
   signInWithEmailAndPassword(auth, email, password)
-    .then(() => alert("Login Successful ✅"))
-    .catch(error => alert(error.message));
+  .then(() => {
+    window.location.href = "dashboard.html";
+  })
+  .catch(error => alert(error.message));
 }
 
 // Toggle Forms
@@ -68,3 +70,4 @@ function toggleForm(type) {
 window.signupUser = signupUser;
 window.loginUser = loginUser;
 window.toggleForm = toggleForm;
+
