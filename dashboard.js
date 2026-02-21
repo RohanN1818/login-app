@@ -1,10 +1,16 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut }
-from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
-// SAME CONFIG
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut,
+  setPersistence,
+  browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+// Firebase Config
 const firebaseConfig = {
-  apiKey: "AIzaSyBZeoHVMcxsE9m.JHUbqoepFPmWzhihRPy8",
+  apiKey: "AIzaSyBZeoHVMcxsE9mJHUbqoepFPmWzhihRPy8",
   authDomain: "rohan-styles.firebaseapp.com",
   projectId: "rohan-styles",
   storageBucket: "rohan-styles.appspot.com",
@@ -15,20 +21,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Protect page
+// Enable persistence again
+setPersistence(auth, browserLocalPersistence);
 
-  onAuthStateChanged(auth, (user) => {
+// Protect page
+onAuthStateChanged(auth, (user) => {
   if (user) {
     document.getElementById("user-email").innerText =
       "Logged in as: " + user.email;
   } else {
-    console.log("No user yet, waiting...");
+    window.location.href = "index.html";
   }
 });
 
-// Logout
+// Logout function
 function logout() {
   signOut(auth).then(() => {
+    window.location.href = "index.html";
   });
 }
 
