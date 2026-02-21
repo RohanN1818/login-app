@@ -1,10 +1,14 @@
+// Firebase CDN Imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword 
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
-// 🔥 Your Firebase Config
+// Firebase Config
 const firebaseConfig = {
-  apiKey: "AIzaSyBZeoHVMcxsE9m.JHUbqoepFPmWzhihRPy8",
+  apiKey: "AIzaSyBZeoHVMcxsE9mJHUbqoepFPmWzhihRPy8",
   authDomain: "rohan-styles.firebaseapp.com",
   projectId: "rohan-styles",
   storageBucket: "rohan-styles.appspot.com",
@@ -16,51 +20,51 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// 🔄 Toggle Form
-function toggleForm(type) {
-    const login = document.getElementById("login-section");
-    const signup = document.getElementById("signup-section");
-
-    if (type === "signup") {
-        login.style.display = "none";
-        signup.style.display = "block";
-    } else {
-        login.style.display = "block";
-        signup.style.display = "none";
-    }
-}
-
-// 📝 Sign Up
+// Sign Up
 function signupUser(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const email = document.getElementById("signup-email").value;
-    const password = document.getElementById("signup-password").value;
-    const confirm = document.getElementById("signup-confirm").value;
+  const email = document.getElementById("signup-email").value;
+  const password = document.getElementById("signup-password").value;
+  const confirm = document.getElementById("signup-confirm").value;
 
-    if (password !== confirm) {
-        alert("Passwords do not match ❌");
-        return;
-    }
+  if (password !== confirm) {
+    alert("Passwords do not match ❌");
+    return;
+  }
 
-    createUserWithEmailAndPassword(auth, email, password)
-        .then(() => alert("Signup Successful ✅"))
-        .catch(error => alert(error.message));
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Signup Successful ✅"))
+    .catch(error => alert(error.message));
 }
 
-// 🔐 Login
+// Login
 function loginUser(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const email = document.getElementById("login-email").value;
-    const password = document.getElementById("login-password").value;
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then(() => alert("Login Successful ✅"))
-        .catch(error => alert(error.message));
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Login Successful ✅"))
+    .catch(error => alert(error.message));
 }
 
-// Make functions accessible to HTML
+// Toggle Forms
+function toggleForm(type) {
+  const login = document.getElementById("login-section");
+  const signup = document.getElementById("signup-section");
+
+  if (type === "signup") {
+    login.style.display = "none";
+    signup.style.display = "block";
+  } else {
+    login.style.display = "block";
+    signup.style.display = "none";
+  }
+}
+
+// Make functions global
 window.signupUser = signupUser;
 window.loginUser = loginUser;
 window.toggleForm = toggleForm;
