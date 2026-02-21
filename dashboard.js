@@ -25,23 +25,26 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 onAuthStateChanged(auth, async (user) => {
-  if (user) {
 
-    document.getElementById("user-email").innerText = user.email;
-    document.getElementById("user-name").innerText = user.displayName;
-    document.getElementById("profile-pic").src = user.photoURL;
-
-    const docSnap = await getDoc(doc(db, "users", user.uid));
-
-    if (docSnap.exists()) {
-      if (docSnap.data().role === "admin") {
-        document.getElementById("admin-panel").style.display = "block";
-      }
-    }
-
-  } else {
-    window.location.href = "index.html";
+  if (!user) {
+    console.log("No user detected");
+    window.location.replace("index.html");
+    return;
   }
+
+  console.log("User detected:", user.email);
+
+  document.getElementById("user-email").innerText = user.email;
+  document.getElementById("user-name").innerText = user.displayName || "User";
+  document.getElementById("profile-pic").src =
+    user.photoURL || "https://i.pravatar.cc/150";
+
+  const docSnap = await getDoc(doc(db, "users", user.uid));
+
+  if (docSnap.exists() && docSnap.data().role === "admin") {
+    document.getElementById("admin-panel").style.display = "block";
+  }
+
 });
 
 window.logout = async function () {
