@@ -1,41 +1,66 @@
-// Function to toggle between Login and Sign Up sections
-function toggleForm(formType) {
-    const loginSection = document.getElementById('login-section');
-    const signupSection = document.getElementById('signup-section');
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
-    if (formType === 'signup') {
-        loginSection.style.display = 'none';
-        signupSection.style.display = 'block';
+// 🔥 Your Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyBZeoHVMcxsE9m.JHUbqoepFPmWzhihRPy8",
+  authDomain: "rohan-styles.firebaseapp.com",
+  projectId: "rohan-styles",
+  storageBucket: "rohan-styles.appspot.com",
+  messagingSenderId: "610424653799",
+  appId: "1:610424653799:web:3e97d73ef97c0f4db6df42"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// 🔄 Toggle Form
+function toggleForm(type) {
+    const login = document.getElementById("login-section");
+    const signup = document.getElementById("signup-section");
+
+    if (type === "signup") {
+        login.style.display = "none";
+        signup.style.display = "block";
     } else {
-        loginSection.style.display = 'block';
-        signupSection.style.display = 'none';
+        login.style.display = "block";
+        signup.style.display = "none";
     }
 }
 
-// Handle Login Submission
-function loginUser(event) {
-    event.preventDefault(); // Prevents the page from reloading
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-
-    console.log('Login Attempt:', { email, password });
-    alert('Login button clicked! (Backend connection needed to actually log in)');
-}
-
-// Handle Sign Up Submission
+// 📝 Sign Up
 function signupUser(event) {
-    event.preventDefault(); // Prevents the page from reloading
-    const email = document.getElementById('signup-email').value;
-    const username = document.getElementById('signup-username').value;
-    const password = document.getElementById('signup-password').value;
-    const confirmPassword = document.getElementById('signup-confirm').value;
+    event.preventDefault();
 
-    // Basic Validation
-    if (password !== confirmPassword) {
-        alert("Passwords do not match. Please try again.");
+    const email = document.getElementById("signup-email").value;
+    const password = document.getElementById("signup-password").value;
+    const confirm = document.getElementById("signup-confirm").value;
+
+    if (password !== confirm) {
+        alert("Passwords do not match ❌");
         return;
     }
 
-    console.log('Sign Up Attempt:', { email, username, password });
-    alert('Sign Up button clicked! (Backend connection needed to save this user)');
+    createUserWithEmailAndPassword(auth, email, password)
+        .then(() => alert("Signup Successful ✅"))
+        .catch(error => alert(error.message));
 }
+
+// 🔐 Login
+function loginUser(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then(() => alert("Login Successful ✅"))
+        .catch(error => alert(error.message));
+}
+
+// Make functions accessible to HTML
+window.signupUser = signupUser;
+window.loginUser = loginUser;
+window.toggleForm = toggleForm;
