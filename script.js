@@ -1,9 +1,12 @@
 // Firebase CDN Imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+
 import { 
-  getAuth, 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword 
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  setPersistence,
+  browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
 // Firebase Config
@@ -20,7 +23,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Sign Up
+// ✅ Enable persistence (VERY IMPORTANT)
+setPersistence(auth, browserLocalPersistence)
+  .then(() => {
+    console.log("Persistence enabled");
+  })
+  .catch((error) => {
+    console.error("Persistence error:", error);
+  });
+
+
+// -------------------- SIGN UP --------------------
+
 function signupUser(event) {
   event.preventDefault();
 
@@ -34,11 +48,15 @@ function signupUser(event) {
   }
 
   createUserWithEmailAndPassword(auth, email, password)
-    .then(() => alert("Signup Successful ✅"))
-    .catch(error => alert(error.message));
+    .then(() => {
+      alert("Signup Successful ✅");
+    })
+    .catch((error) => alert(error.message));
 }
 
-// Login
+
+// -------------------- LOGIN --------------------
+
 function loginUser(event) {
   event.preventDefault();
 
@@ -46,13 +64,16 @@ function loginUser(event) {
   const password = document.getElementById("login-password").value;
 
   signInWithEmailAndPassword(auth, email, password)
-  .then(() => {
-    window.location.href = "./dashboard.html";
-  })
-  .catch(error => alert(error.message));
+    .then(() => {
+      // ✅ Proper redirect
+      window.location.href = "./dashboard.html";
+    })
+    .catch((error) => alert(error.message));
 }
 
-// Toggle Forms
+
+// -------------------- TOGGLE FORMS --------------------
+
 function toggleForm(type) {
   const login = document.getElementById("login-section");
   const signup = document.getElementById("signup-section");
@@ -66,9 +87,8 @@ function toggleForm(type) {
   }
 }
 
+
 // Make functions global
 window.signupUser = signupUser;
 window.loginUser = loginUser;
 window.toggleForm = toggleForm;
-
-
