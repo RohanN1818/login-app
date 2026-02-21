@@ -48,25 +48,64 @@
         </div>
 
     </div>
+    
+    <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
+from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "rohan-styles.firebaseapp.com",
+  projectId: "rohan-styles",
+  storageBucket: "rohan-styles.appspot.com",
+  messagingSenderId: "610424653799",
+  appId: "1:610424653799:web:3e97d73ef97c0f4db6df42"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// SIGNUP
+window.signupUser = function(event) {
+  event.preventDefault();
+  const email = document.getElementById("signup-email").value;
+  const password = document.getElementById("signup-password").value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Signup Successful ✅"))
+    .catch(error => alert(error.message));
+};
+
+// LOGIN
+window.loginUser = function(event) {
+  event.preventDefault();
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Login Successful ✅"))
+    .catch(error => alert(error.message));
+};
+
+// TOGGLE FORM
+window.toggleForm = function(type) {
+  const login = document.getElementById("login-section");
+  const signup = document.getElementById("signup-section");
+
+  if (type === "signup") {
+    login.style.display = "none";
+    signup.style.display = "block";
+  } else {
+    login.style.display = "block";
+    signup.style.display = "none";
+  }
+};
+
+    </script>
+    
 </body>
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBZeoHVMcxsE9mJHUbqoepFPmWzhihRPy8",
-    authDomain: "rohan-styles.firebaseapp.com",
-    projectId: "rohan-styles",
-    storageBucket: "rohan-styles.firebasestorage.app",
-    messagingSenderId: "610424653799",
-    appId: "1:610424653799:web:3e97d73ef97c0f4db6df42"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
 </html>
+
 
