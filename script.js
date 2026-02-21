@@ -15,12 +15,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 const firebaseConfig = {
- apiKey: "AIzaSyBZeoHVMcxsE9mJHUbqoepFPmWzhihRPy8",
-authDomain: "rohan-styles.firebaseapp.con",
-projectId: "rohan-styles",
-storageBucket: "rohan-styles.firebasestorage.app".
-messagingSender ld: "610424653799",
-appId: "1:610424653799:web:3e97d73ef97c0f4db6df42"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "rohan-styles.firebaseapp.com",
+  projectId: "rohan-styles",
+  storageBucket: "rohan-styles.appspot.com",
+  messagingSenderId: "610424653799",
+  appId: "1:610424653799:web:3e97d73ef97c0f4db6df42"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -29,8 +29,25 @@ const db = getFirestore(app);
 
 setPersistence(auth, browserLocalPersistence);
 
-// SIGNUP
-window.signupUser = async function(event) {
+
+// ================= LOGIN =================
+window.loginUser = async function (event) {
+  event.preventDefault();
+
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    window.location.href = "dashboard.html";
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+
+// ================= SIGNUP =================
+window.signupUser = async function (event) {
   event.preventDefault();
 
   const username = document.getElementById("signup-username").value;
@@ -38,7 +55,7 @@ window.signupUser = async function(event) {
   const password = document.getElementById("signup-password").value;
   const confirm = document.getElementById("signup-confirm").value;
 
-  if(password !== confirm){
+  if (password !== confirm) {
     alert("Passwords do not match");
     return;
   }
@@ -65,23 +82,13 @@ window.signupUser = async function(event) {
   }
 };
 
-// LOGIN
-window.loginUser = async function(event){
-  event.preventDefault();
 
-  const email = document.getElementById("login-email").value;
-  const password = document.getElementById("login-password").value;
+// ================= TOGGLE FORM =================
+window.toggleForm = function (type) {
+  document.getElementById("login-section").style.display =
+    type === "signup" ? "none" : "block";
 
-  try{
-    await signInWithEmailAndPassword(auth, email, password);
-    window.location.href = "dashboard.html";
-  }catch(error){
-    alert(error.message);
-  }
+  document.getElementById("signup-section").style.display =
+    type === "signup" ? "block" : "none";
 };
 
-// TOGGLE
-window.toggleForm = function(type){
-  document.getElementById("login-section").style.display = type === "signup" ? "none" : "block";
-  document.getElementById("signup-section").style.display = type === "signup" ? "block" : "none";
-};
