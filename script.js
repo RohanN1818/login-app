@@ -14,11 +14,12 @@ import {
   setDoc
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+
+  const firebaseConfig = {
+  apiKey: "AIzaSyBZeoHVMcxsE9mJHUbqoepFPmWzhihRPy8",
   authDomain: "rohan-styles.firebaseapp.com",
   projectId: "rohan-styles",
-  storageBucket: "rohan-styles.appspot.com",
+  storageBucket: "rohan-styles.firebasestorage.app",
   messagingSenderId: "610424653799",
   appId: "1:610424653799:web:3e97d73ef97c0f4db6df42"
 };
@@ -29,26 +30,8 @@ const db = getFirestore(app);
 
 setPersistence(auth, browserLocalPersistence);
 
-
-// ================= LOGIN =================
-window.loginUser = async function (event) {
-  event.preventDefault();
-
-  const email = document.getElementById("login-email").value;
-  const password = document.getElementById("login-password").value;
-
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    window.location.href = "dashboard.html";
-  } catch (error) {
-    alert(error.message);
-  }
-};
-
-
-// ================= SIGNUP =================
-window.signupUser = async function (event) {
-  event.preventDefault();
+// SIGNUP
+window.signupUser = async function () {
 
   const username = document.getElementById("signup-username").value;
   const email = document.getElementById("signup-email").value;
@@ -82,13 +65,25 @@ window.signupUser = async function (event) {
   }
 };
 
+// LOGIN
+window.loginUser = async function () {
 
-// ================= TOGGLE FORM =================
-window.toggleForm = function (type) {
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    window.location.href = "dashboard.html";
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+// TOGGLE
+window.toggleForm = function(type) {
   document.getElementById("login-section").style.display =
     type === "signup" ? "none" : "block";
 
   document.getElementById("signup-section").style.display =
     type === "signup" ? "block" : "none";
 };
-
