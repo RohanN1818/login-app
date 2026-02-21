@@ -47,7 +47,7 @@ function loginUser(event) {
 
   signInWithEmailAndPassword(auth, email, password)
   .then(() => {
-    window.location.href = "dashboard.html";
+    window.location.href = "./dashboard.html";
   })
   .catch(error => alert(error.message));
 }
@@ -70,4 +70,5 @@ function toggleForm(type) {
 window.signupUser = signupUser;
 window.loginUser = loginUser;
 window.toggleForm = toggleForm;
+
 
