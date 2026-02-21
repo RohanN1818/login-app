@@ -21,9 +21,15 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById("user-email").innerText =
       "Logged in as: " + user.email;
   } else {
-    window.location.href = "index.html";
+    // Small delay to avoid false redirect
+    setTimeout(() => {
+      if (!auth.currentUser) {
+        window.location.href = "./index.html";
+      }
+    }, 1000);
   }
 });
+  
 
 // Logout
 function logout() {
