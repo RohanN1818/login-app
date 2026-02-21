@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login App</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- LOGIN -->
-<div class="container" id="login-section">
-<h2>Login</h2>
-<form onsubmit="loginUser(event)">
-<input type="email" id="login-email" placeholder="Email" required>
-<input type="password" id="login-password" placeholder="Password" required>
-<button type="submit">Login</button>
-<p>Don't have account? <a href="#" onclick="toggleForm('signup')">Register</a></p>
-</form>
+<div class="container">
+    <h2>Login</h2>
+
+    <div class="input-box">
+        <input type="email" placeholder="Email" id="email" required>
+    </div>
+
+    <div class="input-box">
+        <input type="password" placeholder="Password" id="password" required>
+    </div>
+
+    <div class="options">
+        <label>
+            <input type="checkbox"> Remember me
+        </label>
+        <a href="#">Forgot Password?</a>
+    </div>
+
+    <button onclick="login()">Login</button>
+
+    <p class="register-text">
+        Don't have an account? 
+        <a href="#" onclick="showRegister()">Register</a>
+    </p>
 </div>
 
-<!-- SIGNUP -->
-<div class="container" id="signup-section" style="display:none;">
-<h2>Sign Up</h2>
-<form onsubmit="signupUser(event)">
-<input type="text" id="signup-username" placeholder="Username" required>
-<input type="email" id="signup-email" placeholder="Email" required>
-<input type="password" id="signup-password" placeholder="Password" required>
-<input type="password" id="signup-confirm" placeholder="Confirm Password" required>
-<button type="submit">Sign Up</button>
-<p>Already have account? <a href="#" onclick="toggleForm('login')">Login</a></p>
-</form>
-</div>
-
-<script type="module" src="script.js"></script>
+<script src="script.js" type="module"></script>
 </body>
 </html>
