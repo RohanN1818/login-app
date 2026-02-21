@@ -89,3 +89,47 @@ button:hover {
     color: #90e0ef;
     text-decoration: none;
 }
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg,#89f7fe,#66a6ff);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.container{
+  background: rgba(255,255,255,0.9);
+  padding:30px;
+  border-radius:12px;
+  text-align:center;
+}
+
+input{
+  display:block;
+  margin:10px 0;
+  padding:10px;
+  width:100%;
+}
+
+button{
+  padding:10px 20px;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.avatar{
+  width:80px;
+  border-radius:50%;
+  margin-bottom:10px;
+}
+
+.dark-mode{
+  background:#121212;
+  color:white;
+}
+
+.dark-mode .container{
+  background:#1e1e1e;
+}
+    
