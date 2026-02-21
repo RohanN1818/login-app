@@ -16,25 +16,19 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // Protect page
-onAuthStateChanged(auth, (user) => {
+
+  onAuthStateChanged(auth, (user) => {
   if (user) {
     document.getElementById("user-email").innerText =
       "Logged in as: " + user.email;
   } else {
-    // Small delay to avoid false redirect
-    setTimeout(() => {
-      if (!auth.currentUser) {
-        window.location.href = "./index.html";
-      }
-    }, 1000);
+    console.log("No user yet, waiting...");
   }
 });
-  
 
 // Logout
 function logout() {
   signOut(auth).then(() => {
-    window.location.href = "./index.html";
   });
 }
 
