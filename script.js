@@ -14,9 +14,8 @@ import {
   setDoc
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-
-  const firebaseConfig = {
-  apiKey: "AIzaSyBZeoHVMcxsE9mJHUbqoepFPmWzhihRPy8",
+const firebaseConfig = {
+  apiKey: "AIzaSyBZeoHVMcxsE9m.JHUbqoepFPmWzhihRPy8",
   authDomain: "rohan-styles.firebaseapp.com",
   projectId: "rohan-styles",
   storageBucket: "rohan-styles.firebasestorage.app",
@@ -72,13 +71,18 @@ window.loginUser = async function () {
   const password = document.getElementById("login-password").value;
 
   try {
+
+    // 👇 WAIT for persistence to set first
+    await setPersistence(auth, browserLocalPersistence);
+
     await signInWithEmailAndPassword(auth, email, password);
+
     window.location.href = "dashboard.html";
+
   } catch (error) {
     alert(error.message);
   }
 };
-
 // TOGGLE
 window.toggleForm = function(type) {
   document.getElementById("login-section").style.display =
