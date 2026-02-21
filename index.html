@@ -2,112 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome - Login & Sign Up</title>
+    <title>Login & Sign Up</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        
-        <div id="login-section" class="form-box">
-            <h2>Welcome Back</h2>
-            <form onsubmit="loginUser(event)">
-                <div class="input-group">
-                    <input type="email" id="login-email" placeholder="Email Address" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="login-password" placeholder="Password" required>
-                </div>
-                <button type="submit" class="btn">Login</button>
-            </form>
-            <p class="switch-text">
-                Don't have an account? <a href="#" onclick="toggleForm('signup')">Sign Up</a>
-            </p>
-        </div>
 
-        <div id="signup-section" class="form-box" style="display: none;">
-            <h2>Create Account</h2>
-            <form onsubmit="signUpUser(event)">
-                <div class="input-group">
-                    <input type="email" id="signup-email" placeholder="Email Address" required>
-                </div>
-                <div class="input-group">
-                    <input type="text" id="signup-username" placeholder="Username" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="signup-password" placeholder="Password" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="signup-confirm" placeholder="Confirm Password" required>
-                </div>
-                <button type="submit" class="btn">Sign Up</button>
-            </form>
-            <p class="switch-text">
-                Already have an account? <a href="#" onclick="toggleForm('login')">Login</a>
-            </p>
-        </div>
+<div class="container">
 
+    <!-- LOGIN SECTION -->
+    <div id="login-section" class="form-box">
+        <h2>Login</h2>
+        <form onsubmit="loginUser(event)">
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? 
+            <a href="#" onclick="toggleForm('signup')">Sign Up</a>
+        </p>
     </div>
-    
-    <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
-from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+    <!-- SIGNUP SECTION -->
+    <div id="signup-section" class="form-box" style="display:none;">
+        <h2>Sign Up</h2>
+        <form onsubmit="signupUser(event)">
+            <input type="email" id="signup-email" placeholder="Email" required>
+            <input type="password" id="signup-password" placeholder="Password" required>
+            <input type="password" id="signup-confirm" placeholder="Confirm Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? 
+            <a href="#" onclick="toggleForm('login')">Login</a>
+        </p>
+    </div>
 
-const firebaseConfig = {
-  apiKey: : "AIzaSyBZeoHVMcxsE9mJHUbqoepFPmWzhihRPy8",
-  authDomain: "rohan-styles.firebaseapp.com",
-  projectId: "rohan-styles",
-  storageBucket: "rohan-styles.appspot.com",
-  messagingSenderId: "610424653799",
-  appId: "1:610424653799:web:3e97d73ef97c0f4db6df42"
-};
+</div>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+<script type="module" src="script.js"></script>
 
-// SIGNUP
-window.signupUser = function(event) {
-  event.preventDefault();
-  const email = document.getElementById("signup-email").value;
-  const password = document.getElementById("signup-password").value;
-
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(() => alert("Signup Successful ✅"))
-    .catch(error => alert(error.message));
-};
-
-// LOGIN
-window.loginUser = function(event) {
-  event.preventDefault();
-  const email = document.getElementById("login-email").value;
-  const password = document.getElementById("login-password").value;
-
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => alert("Login Successful ✅"))
-    .catch(error => alert(error.message));
-};
-
-// TOGGLE FORM
-window.toggleForm = function(type) {
-  const login = document.getElementById("login-section");
-  const signup = document.getElementById("signup-section");
-
-  if (type === "signup") {
-    login.style.display = "none";
-    signup.style.display = "block";
-  } else {
-    login.style.display = "block";
-    signup.style.display = "none";
-  }
-};
-
-    </script>
-    
 </body>
 </html>
-
-
-
-
