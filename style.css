@@ -2,84 +2,90 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
+    height: 100vh;
+    background: url("https://images.unsplash.com/photo-1501785888041-af3ef285b470") no-repeat center center/cover;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f2f5;
 }
 
+/* Glass Container */
 .container {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
+    width: 350px;
+    padding: 35px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.form-box {
-    background: #ffffff;
-    padding: 40px 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+/* Title */
+.container h2 {
     text-align: center;
+    margin-bottom: 30px;
+    color: #ffffff;
 }
 
-.form-box h2 {
-    margin-bottom: 25px;
-    color: #333;
-}
-
+/* Input Group */
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .input-group input {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 10px;
+    border: none;
     outline: none;
-    font-size: 16px;
-    transition: border-color 0.3s;
+    background: transparent;
+    border-bottom: 2px solid rgba(255,255,255,0.6);
+    color: white;
+    font-size: 14px;
 }
 
-.input-group input:focus {
-    border-color: #007bff;
+.input-group input::placeholder {
+    color: rgba(255,255,255,0.8);
 }
 
-.btn {
+/* Remember + Forgot */
+.options {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+/* Button */
+button {
     width: 100%;
     padding: 12px;
     border: none;
-    background-color: #007bff;
+    border-radius: 10px;
+    background: #0d1b2a;
     color: white;
-    font-size: 16px;
     font-weight: bold;
-    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 10px;
+    transition: 0.3s;
 }
 
-.btn:hover {
-    background-color: #0056b3;
+button:hover {
+    background: #1b263b;
 }
 
-.switch-text {
-    margin-top: 20px;
+/* Bottom Text */
+.bottom-text {
+    text-align: center;
+    margin-top: 15px;
+    color: white;
     font-size: 14px;
-    color: #666;
 }
 
-.switch-text a {
-    color: #007bff;
+.bottom-text a {
+    color: #90e0ef;
     text-decoration: none;
-    font-weight: bold;
-}
-
-.switch-text a:hover {
-    text-decoration: underline;
 }
