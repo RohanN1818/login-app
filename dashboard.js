@@ -34,7 +34,7 @@ onAuthStateChanged(auth, (user) => {
 // Logout
 function logout() {
   signOut(auth).then(() => {
-    window.location.href = "index.html";
+    window.location.href = "./index.html";
   });
 }
 
