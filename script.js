@@ -1,7 +1,7 @@
 // Firebase CDN Imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 
-import { 
+import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -23,18 +23,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ✅ Enable persistence (VERY IMPORTANT)
-setPersistence(auth, browserLocalPersistence)
-  .then(() => {
-    console.log("Persistence enabled");
-  })
-  .catch((error) => {
-    console.error("Persistence error:", error);
-  });
+// Enable persistence
+setPersistence(auth, browserLocalPersistence);
 
-
-// -------------------- SIGN UP --------------------
-
+// ---------------- SIGN UP ----------------
 function signupUser(event) {
   event.preventDefault();
 
@@ -43,20 +35,18 @@ function signupUser(event) {
   const confirm = document.getElementById("signup-confirm").value;
 
   if (password !== confirm) {
-    alert("Passwords do not match ❌");
+    alert("Passwords do not match");
     return;
   }
 
   createUserWithEmailAndPassword(auth, email, password)
     .then(() => {
-      alert("Signup Successful ✅");
+      alert("Signup Successful");
     })
     .catch((error) => alert(error.message));
 }
 
-
-// -------------------- LOGIN --------------------
-
+// ---------------- LOGIN ----------------
 function loginUser(event) {
   event.preventDefault();
 
@@ -65,15 +55,12 @@ function loginUser(event) {
 
   signInWithEmailAndPassword(auth, email, password)
     .then(() => {
-      // ✅ Proper redirect
-      window.location.href = "./dashboard.html";
+      window.location.href = "dashboard.html";
     })
     .catch((error) => alert(error.message));
 }
 
-
-// -------------------- TOGGLE FORMS --------------------
-
+// ---------------- TOGGLE FORMS ----------------
 function toggleForm(type) {
   const login = document.getElementById("login-section");
   const signup = document.getElementById("signup-section");
@@ -86,7 +73,6 @@ function toggleForm(type) {
     signup.style.display = "none";
   }
 }
-
 
 // Make functions global
 window.signupUser = signupUser;
