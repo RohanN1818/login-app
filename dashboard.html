@@ -1,27 +1,29 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <div class="container">
-    <h2>Welcome 🎉</h2>
-    
-    <!-- This will show logged in email -->
-    <p id="user-email"></p>
+<div class="container">
+<img id="profile-pic" class="avatar">
+<h2>Welcome <span id="user-name"></span></h2>
+<p>Email: <span id="user-email"></span></p>
 
-    <!-- Logout Button -->
-    <button onclick="logout()">Logout</button>
-  </div>
+<button id="theme-toggle">Toggle Dark/Light</button>
 
-  <!-- IMPORTANT: Must be type="module" -->
-  <script type="module" src="dashboard.js"></script>
+<div id="admin-panel" style="display:none;">
+<h3>Admin Panel</h3>
+<p>You are admin 👑</p>
+</div>
 
+<button onclick="logout()">Logout</button>
+</div>
+
+<script type="module" src="dashboard.js"></script>
 </body>
 </html>
+
