@@ -1,3 +1,4 @@
+/* Universal reset for margins, paddings, and box-sizing */
 * {
     margin: 0;
     padding: 0;
@@ -5,36 +6,46 @@
     font-family: Arial, sans-serif;
 }
 
+/* Base body styles */
 body {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center/cover;
+    /* Smooth transition for theme changes */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Container styling for the main form/content area */
 .container {
     width: 90%;
     max-width: 420px;
     padding: 50px 40px;
     border-radius: 25px;
     text-align: center;
-
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(20px);
     box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    /* Smooth transition for theme changes */
+    transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Heading inside the container */
 .container h2 {
     font-size: 32px;
     color: white;
     margin-bottom: 30px;
+    /* Smooth transition for theme changes */
+    transition: color 0.3s ease;
 }
 
+/* Input box wrapper */
 .input-box {
     margin-bottom: 25px;
 }
 
+/* Input field styling */
 .input-box input {
     width: 100%;
     padding: 12px 5px;
@@ -44,12 +55,17 @@ body {
     outline: none;
     color: white;
     font-size: 16px;
+    /* Smooth transition for theme changes */
+    transition: border-bottom-color 0.3s ease, color 0.3s ease;
 }
 
+/* Placeholder text for input fields */
 .input-box input::placeholder {
     color: rgba(255,255,255,0.7);
+    /* Note: placeholder transitions are less universally supported */
 }
 
+/* Options section (e.g., "Remember me" and "Forgot password") */
 .options {
     display: flex;
     justify-content: space-between;
@@ -57,13 +73,19 @@ body {
     color: white;
     font-size: 14px;
     margin-bottom: 30px;
+    /* Smooth transition for theme changes */
+    transition: color 0.3s ease;
 }
 
+/* Links within the options section */
 .options a {
-    color: #9c27b0;
+    color: #9c27b0; /* Accent color */
     text-decoration: none;
+    /* Smooth transition for theme changes */
+    transition: color 0.3s ease;
 }
 
+/* Button styling */
 button {
     width: 100%;
     padding: 15px;
@@ -74,17 +96,79 @@ button {
     font-size: 16px;
     cursor: pointer;
     margin-bottom: 20px;
+    /* Smooth transition for theme changes */
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
+/* Button hover effect */
 button:hover {
     background: #0f2d4d;
 }
 
+/* Register text section */
 .register-text {
     color: white;
+    /* Smooth transition for theme changes */
+    transition: color 0.3s ease;
 }
 
+/* Link within the register text section */
 .register-text a {
     color: #ddd;
     text-decoration: none;
+    /* Smooth transition for theme changes */
+    transition: color 0.3s ease;
+}
+
+
+/* --- Dark Mode Styles --- */
+/* These styles will apply when the 'dark-mode' class is added to the <body> element */
+body.dark-mode {
+    background: #1a1a1a; /* Dark background color */
+    color: #e0e0e0; /* Light text color for better contrast */
+    background-image: none; /* Remove image for a solid dark background */
+}
+
+body.dark-mode .container {
+    background: rgba(40, 40, 40, 0.8); /* Darker, slightly translucent container */
+    backdrop-filter: blur(15px); /* Maintain blur effect */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); /* Adjust shadow for dark mode */
+}
+
+body.dark-mode .container h2 {
+    color: #f0f0f0; /* Lighter heading color */
+}
+
+body.dark-mode .input-box input {
+    border-bottom: 2px solid #888; /* Lighter border for inputs */
+    color: #e0e0e0; /* Light text color for input values */
+}
+
+body.dark-mode .input-box input::placeholder {
+    color: rgba(220, 220, 220, 0.7); /* Lighter placeholder text */
+}
+
+body.dark-mode .options {
+    color: #e0e0e0; /* Light text color for options */
+}
+
+body.dark-mode .options a {
+    color: #bb86fc; /* Accent color for links in dark mode */
+}
+
+body.dark-mode button {
+    background: #4a4a4a; /* Darker button background */
+    color: #f0f0f0; /* Light text on button */
+}
+
+body.dark-mode button:hover {
+    background: #6a6a6a; /* Slightly lighter hover for buttons */
+}
+
+body.dark-mode .register-text {
+    color: #e0e0e0; /* Light text color */
+}
+
+body.dark-mode .register-text a {
+    color: #bb86fc; /* Accent color for register link */
 }
