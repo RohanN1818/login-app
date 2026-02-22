@@ -30,6 +30,27 @@ const db = getFirestore(app);
 
 setPersistence(auth, browserLocalPersistence);
 
+// --- START: New function for displaying success messages ---
+function showSuccessMessage() {
+    const successMessageDiv = document.getElementById('success-message');
+    if (successMessageDiv) {
+        successMessageDiv.style.display = 'block'; // Make it visible
+        // Trigger reflow to ensure transition works if display was just changed
+        successMessageDiv.offsetWidth;
+        successMessageDiv.style.opacity = '1';    // Fade in
+
+        setTimeout(() => {
+            successMessageDiv.style.opacity = '0'; // Fade out
+            // After the fade-out transition completes, set display to none
+            setTimeout(() => {
+                successMessageDiv.style.display = 'none'; // Completely hide
+            }, 500); // This duration (500ms) should match your CSS transition-duration
+        }, 3000); // Display for 3 seconds before starting to fade out
+    }
+}
+// --- END: New function for displaying success messages ---
+
+
 // SIGNUP
 window.signupUser = async function () {
 
@@ -58,10 +79,16 @@ window.signupUser = async function () {
       createdAt: new Date()
     });
 
-    window.location.href = "dashboard.html";
+    // --- START: Integration of success message ---
+    showSuccessMessage(); // Display the success message
+    // Delay redirection to allow the message to be seen
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 3500); // 3000ms display + 500ms fade-out = 3.5 seconds before redirect
+    // --- END: Integration of success message ---
 
   } catch (error) {
-    alert(error.message);
+    alert(error.message); // Keep existing error handling
   }
 };
 
@@ -92,4 +119,3 @@ window.toggleForm = function(type) {
   document.getElementById("signup-section").style.display =
     type === "signup" ? "block" : "none";
 };
-    
