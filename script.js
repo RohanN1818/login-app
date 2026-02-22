@@ -31,10 +31,7 @@ const db = getFirestore(app);
 setPersistence(auth, browserLocalPersistence);
 
 // SIGNUP
-
-window.signupUser = async function (event) {
-  // 1. Prevent double submission if attached to a form
-  if (event) event.preventDefault(); 
+window.signupUser = async function () {
 
   const username = document.getElementById("signup-username").value;
   const email = document.getElementById("signup-email").value;
@@ -61,65 +58,30 @@ window.signupUser = async function (event) {
       createdAt: new Date()
     });
 
-    // 2. Display the success message!
-    alert("Registered successfully!"); 
-    
-    // 3. Redirect to dashboard
     window.location.href = "dashboard.html";
 
   } catch (error) {
-    // 4. Handle the error cleanly
-    if (error.code === 'auth/email-already-in-use') {
-       alert("This email is already registered. Please login instead.");
-    } else {
-       alert(error.message);
-    }
+    alert(error.message);
   }
 };
 
 // LOGIN
-window.signupUser = async function (event) {
-  // 1. Prevent double submission if attached to a form
-  if (event) event.preventDefault(); 
+window.loginUser = async function () {
 
-  const username = document.getElementById("signup-username").value;
-  const email = document.getElementById("signup-email").value;
-  const password = document.getElementById("signup-password").value;
-  const confirm = document.getElementById("signup-confirm").value;
-
-  if (password !== confirm) {
-    alert("Passwords do not match");
-    return;
-  }
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
 
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-    await updateProfile(userCredential.user, {
-      displayName: username,
-      photoURL: "https://i.pravatar.cc/150?u=" + email
-    });
+    // 👇 WAIT for persistence to set first
+    await setPersistence(auth, browserLocalPersistence);
 
-    await setDoc(doc(db, "users", userCredential.user.uid), {
-      username: username,
-      email: email,
-      role: "user",
-      createdAt: new Date()
-    });
+    await signInWithEmailAndPassword(auth, email, password);
 
-    // 2. Display the success message!
-    alert("Registered successfully!"); 
-    
-    // 3. Redirect to dashboard
     window.location.href = "dashboard.html";
 
   } catch (error) {
-    // 4. Handle the error cleanly
-    if (error.code === 'auth/email-already-in-use') {
-       alert("This email is already registered. Please login instead.");
-    } else {
-       alert(error.message);
-    }
+    alert(error.message);
   }
 };
 // TOGGLE
@@ -130,6 +92,4 @@ window.toggleForm = function(type) {
   document.getElementById("signup-section").style.display =
     type === "signup" ? "block" : "none";
 };
-
-
-
+    
