@@ -79,7 +79,7 @@ window.signupUser = async function (event) {
 
 // LOGIN
 window.signupUser = async function (event) {
-  // Prevent double submission if attached to a form
+  // 1. Prevent double submission if attached to a form
   if (event) event.preventDefault(); 
 
   const username = document.getElementById("signup-username").value;
@@ -90,14 +90,6 @@ window.signupUser = async function (event) {
   if (password !== confirm) {
     alert("Passwords do not match");
     return;
-  }
-
-  // Grab the button that was clicked to prevent double-clicks
-  let registerBtn = null;
-  if (event && event.target) {
-     registerBtn = event.target;
-     registerBtn.disabled = true; // Disable the button
-     registerBtn.innerText = "Registering..."; // Give instant visual feedback
   }
 
   try {
@@ -115,20 +107,14 @@ window.signupUser = async function (event) {
       createdAt: new Date()
     });
 
-    // Display the exact success message on screen!
-    alert("Account has been registered successfully!"); 
+    // 2. Display the success message!
+    alert("Registered successfully!"); 
     
-    // Redirect to dashboard
+    // 3. Redirect to dashboard
     window.location.href = "dashboard.html";
 
   } catch (error) {
-    // If there is an error, re-enable the button so you can try again
-    if (registerBtn) {
-        registerBtn.disabled = false;
-        registerBtn.innerText = "Register"; 
-    }
-
-    // Handle the error cleanly
+    // 4. Handle the error cleanly
     if (error.code === 'auth/email-already-in-use') {
        alert("This email is already registered. Please login instead.");
     } else {
@@ -136,7 +122,6 @@ window.signupUser = async function (event) {
     }
   }
 };
-
 // TOGGLE
 window.toggleForm = function(type) {
   document.getElementById("login-section").style.display =
@@ -145,5 +130,6 @@ window.toggleForm = function(type) {
   document.getElementById("signup-section").style.display =
     type === "signup" ? "block" : "none";
 };
+
 
 
