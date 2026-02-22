@@ -31,7 +31,10 @@ const db = getFirestore(app);
 setPersistence(auth, browserLocalPersistence);
 
 // SIGNUP
-window.signupUser = async function () {
+
+window.signupUser = async function (event) {
+  // 1. Prevent double submission if attached to a form
+  if (event) event.preventDefault(); 
 
   const username = document.getElementById("signup-username").value;
   const email = document.getElementById("signup-email").value;
@@ -58,10 +61,19 @@ window.signupUser = async function () {
       createdAt: new Date()
     });
 
+    // 2. Display the success message!
+    alert("Registered successfully!"); 
+    
+    // 3. Redirect to dashboard
     window.location.href = "dashboard.html";
 
   } catch (error) {
-    alert(error.message);
+    // 4. Handle the error cleanly
+    if (error.code === 'auth/email-already-in-use') {
+       alert("This email is already registered. Please login instead.");
+    } else {
+       alert(error.message);
+    }
   }
 };
 
@@ -92,3 +104,4 @@ window.toggleForm = function(type) {
   document.getElementById("signup-section").style.display =
     type === "signup" ? "block" : "none";
 };
+
