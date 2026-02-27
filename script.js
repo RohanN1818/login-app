@@ -11,7 +11,8 @@ import {
 import {
   getFirestore,
   doc,
-  setDoc
+  setDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 
@@ -28,35 +29,30 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-setPersistence(auth, browserLocalPersistence);
+await setPersistence(auth, browserLocalPersistence);
 
-// --- START: Function for displaying success messages ---
+
+// SUCCESS MESSAGE FUNCTION
 function showSuccessMessage() {
-    const successMessageDiv = document.getElementById('success-message');
-    if (successMessageDiv) {
-        // Ensure the message is initially hidden and styled correctly
-        successMessageDiv.style.display = 'block';
-        // Trigger reflow to ensure the transition from display:none to opacity:1 works
-        successMessageDiv.offsetWidth; // This forces the browser to re-render, making transition work
-        successMessageDiv.style.opacity = '1';    // Start fade-in
+  const successMessageDiv = document.getElementById('success-message');
+  if (!successMessageDiv) return;
 
-        // Set a timeout to fade out and hide the message
-        setTimeout(() => {
-            successMessageDiv.style.opacity = '0'; // Start fade-out
-            // After the fade-out transition completes, set display to none
-            setTimeout(() => {
-                successMessageDiv.style.display = 'none'; // Completely hide
-            }, 500); // This duration (500ms) should match the 'transition' duration for opacity
-                     // (e.g., transition: opacity 0.5s ease-in-out;)
-        }, 3000); // Display the message for 3 seconds (3000ms) before starting to fade out
-    } else {
-        console.error("Error: The 'success-message' div was not found in the HTML.");
-    }
+  successMessageDiv.style.display = 'block';
+  successMessageDiv.offsetWidth;
+  successMessageDiv.style.opacity = '1';
+
+  setTimeout(() => {
+    successMessageDiv.style.opacity = '0';
+    setTimeout(() => {
+      successMessageDiv.style.display = 'none';
+    }, 500);
+  }, 3000);
 }
-// --- END: Function for displaying success messages ---
 
 
+// =======================
 // SIGNUP
+// =======================
 window.signupUser = async function () {
 
   const username = document.getElementById("signup-username").value;
@@ -70,54 +66,62 @@ window.signupUser = async function () {
   }
 
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-    await updateProfile(userCredential.user, {
+    console.log("Creating user...");
+
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    console.log("Auth created:", user.uid);
+
+    await updateProfile(user, {
       displayName: username,
       photoURL: "https://i.pravatar.cc/150?u=" + email
     });
 
-    await setDoc(doc(db, "users", userCredential.user.uid), {
+    console.log("Writing to Firestore...");
+
+    await setDoc(doc(db, "users", user.uid), {
       username: username,
       email: email,
       role: "user",
-      createdAt: new Date()
+      createdAt: serverTimestamp()
     });
 
-    // --- START: Integration of success message and delayed redirection ---
-    showSuccessMessage(); // Display the success message
-    // Delay redirection to allow the message to be seen and fade out
+    console.log("Firestore write SUCCESS");
+
+    showSuccessMessage();
+
     setTimeout(() => {
       window.location.href = "dashboard.html";
-    }, 3500); // 3000ms display + 500ms fade-out = 3.5 seconds before redirect
-    // --- END: Integration of success message and delayed redirection ---
+    }, 3500);
 
   } catch (error) {
-    alert(error.message); // Keep existing error handling for Firebase errors
-    console.error("Firebase signup error:", error); // Log error for debugging
+    console.error("SIGNUP ERROR:", error);
+    alert(error.message);
   }
 };
 
+
+// =======================
 // LOGIN
+// =======================
 window.loginUser = async function () {
 
   const email = document.getElementById("login-email").value;
   const password = document.getElementById("login-password").value;
 
   try {
-
-    // 👇 WAIT for persistence to set first
     await setPersistence(auth, browserLocalPersistence);
-
     await signInWithEmailAndPassword(auth, email, password);
-
     window.location.href = "dashboard.html";
-
   } catch (error) {
+    console.error("LOGIN ERROR:", error);
     alert(error.message);
-    console.error("Firebase login error:", error); // Log error for debugging
   }
 };
+
+
 // TOGGLE
 window.toggleForm = function(type) {
   document.getElementById("login-section").style.display =
@@ -126,3 +130,4 @@ window.toggleForm = function(type) {
   document.getElementById("signup-section").style.display =
     type === "signup" ? "block" : "none";
 };
+
